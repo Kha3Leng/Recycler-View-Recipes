@@ -15,21 +15,23 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> recipes = new ArrayList<>();
+    private Hashtable<String, String> recipes = new Hashtable<>();
     private RecyclerView recyclerView;
     private RecipeAdapter adapter;
+    public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        for(int i=0; i<5; i++){
-            recipes.add("fuck");
-        }
+        recipes.put(getString(R.string.Tofu), getString(R.string.tofu));
+        recipes.put(getString(R.string.Cofu), getString(R.string.cofu));
+        recipes.put(getString(R.string.Dofu), getString(R.string.dofu));
+        recipes.put(getString(R.string.Eofu), getString(R.string.eofu));
 
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new RecipeAdapter(this, recipes);

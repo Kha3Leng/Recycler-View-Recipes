@@ -1,6 +1,7 @@
 package com.example.recipes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>{
-    public List<String> recipes = new ArrayList<>();
+    public Hashtable<String, String> recipes = new Hashtable();
     public LayoutInflater layoutInflater;
+    private Context context;
 
-    public RecipeAdapter(Context context, List<String> recipes) {
+    public RecipeAdapter(Context context, Hashtable<String,String> recipes) {
         this.recipes = recipes;
         this.layoutInflater = layoutInflater.from(context);
+        this.context = context;
     }
 
     @NonNull
@@ -33,8 +36,26 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position) {
-        String str = recipes.get(position);
-        holder.title.setText(str);
+        switch (position){
+            case 0:
+                holder.title.setText(context.getString(R.string.tofu));
+                holder.description.setText(context.getString(R.string.Tofu));
+                return ;
+            case 1:
+                holder.title.setText(context.getString(R.string.Cofu));
+                holder.description.setText(context.getString(R.string.cofu));
+                return ;
+            case 2:
+                holder.title.setText(context.getString(R.string.Dofu));
+                holder.description.setText(context.getString(R.string.dofu));
+                return ;
+            case 3:
+                holder.title.setText(context.getString(R.string.eofu));
+                holder.description.setText(context.getString(R.string.Eofu));
+                return ;
+            default:
+                return ;
+        }
     }
 
     @Override
@@ -42,7 +63,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return recipes.size();
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder{
+    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView title;
         private TextView description;
         RecipeAdapter adapter;
@@ -52,6 +73,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             this.title = itemView.findViewById(R.id.title);
             this.description = itemView.findViewById(R.id.description);
             this.adapter = adapter;
+            this.title.setOnClickListener(this::onClick);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context.getApplicationContext(), Instructions.class);
+            context.startActivity(intent);
         }
     }
 }
